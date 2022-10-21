@@ -55,7 +55,7 @@ class GitCopyMessageCommand extends Command
         // Run php shell_exec to be able to copy.
         $output = shell_exec(sprintf('echo "%s" | pbcopy', $commitMessages));
 
-        if ($output == 0) {
+        if ($output === 0) {
             $this->error('Could not copy the commit messages to clipboard.');
 
             $this->info('Copy the commit messages below');
@@ -66,6 +66,8 @@ class GitCopyMessageCommand extends Command
 
             return 0;
         }
+
+        $this->info('Done copying');
 
         return 0;
     }
