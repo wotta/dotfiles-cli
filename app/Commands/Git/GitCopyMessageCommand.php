@@ -43,15 +43,31 @@ class GitCopyMessageCommand extends Command
         $commitMessages = $this->runProcess([
             'git',
             'log',
-            '--no-merged',
+            '--no-merges',
             '--oneline',
             '--decorate',
             sprintf('%s..HEAD', $mainBranch),
-            '--pretty="format:%s"',
-        ]);
+            '--pretty=format:%s',
+        ], true);
 
-        dd($commitMessages);
-        // git log --no-merges --oneline --decorate master..HEAD --pretty='format:%s'
+        $this->info('Trying to copy commit messages');
+
+        // Run php shell_exec to be able to copy.
+        $output = shell_exec(sprintf('echo "%s" | pbcopy', $commitMessages));
+
+        if ($output == 0) {
+            $this->error('Could not copy the commit messages to clipboard.');
+
+            $this->info('Copy the commit messages below');
+
+            $this->line('');
+
+            $this->comment($commitMessages);
+
+            return 0;
+        }
+
+        return 0;
     }
 
     /**
