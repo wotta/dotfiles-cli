@@ -12,9 +12,13 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
  */
 trait InteractsWithProcess
 {
-    public function runProcess(string $commandText, bool $shouldThrow = false): ?string
+    public function runProcess(array|string $commandText, bool $shouldThrow = false): ?string
     {
-        $command = explode(' ', $commandText);
+        $command = $commandText;
+
+        if (! is_array($commandText)) {
+            $command = explode(' ', $commandText);
+        }
 
         $process = new Process($command);
 
@@ -41,7 +45,7 @@ trait InteractsWithProcess
         return rtrim($process->getOutput());
     }
 
-    protected function locateBinary(string $binary, bool $shouldThrow = false): ?string
+    protected function locateBinary(string $binary, bool $shouldThrow = true): ?string
     {
         return $this->runProcess('which ' . $binary, $shouldThrow);
     }
