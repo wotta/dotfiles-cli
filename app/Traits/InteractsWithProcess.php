@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use Illuminate\Support\Collection;
 use Symfony\Component\Process\Process;
 use LaravelZero\Framework\Commands\Command;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -12,7 +11,7 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
  */
 trait InteractsWithProcess
 {
-    public function runProcess(array|string $commandText, bool $shouldThrow = false): ?string
+    public function runProcess(array|string $commandText, string $cwd = null, bool $shouldThrow = false): ?string
     {
         $command = $commandText;
 
@@ -20,7 +19,7 @@ trait InteractsWithProcess
             $command = explode(' ', $commandText);
         }
 
-        $process = new Process($command);
+        $process = new Process($command, cwd: $cwd);
 
         try {
             $process->mustRun();
@@ -47,6 +46,6 @@ trait InteractsWithProcess
 
     protected function locateBinary(string $binary, bool $shouldThrow = true): ?string
     {
-        return $this->runProcess('which ' . $binary, $shouldThrow);
+        return $this->runProcess('which ' . $binary, shouldThrow: $shouldThrow);
     }
 }
