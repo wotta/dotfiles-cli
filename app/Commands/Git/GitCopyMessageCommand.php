@@ -33,7 +33,7 @@ class GitCopyMessageCommand extends Command
             'remote',
             'show',
             'origin'
-        ], true);
+        ], shouldThrow: true);
         
 
         $mainBranch = $this->ask('Main branch', (string)Str::of($mainGitBranch)->after('HEAD branch:')->before("\n")->trim());
@@ -46,7 +46,7 @@ class GitCopyMessageCommand extends Command
             '--decorate',
             sprintf('%s..HEAD', $mainBranch),
             '--pretty=format:%s',
-        ], true);
+        ], shouldThrow: true);
 
         $this->info('Trying to copy commit messages');
 
