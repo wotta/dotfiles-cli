@@ -46,7 +46,7 @@ class GitCopyMessageCommand extends Command
             '--decorate',
             sprintf('%s..HEAD', $mainBranch),
             '--pretty=format:%s',
-        ], true);
+        ], shouldThrow: true);
 
         $this->info('Trying to copy commit messages');
 
