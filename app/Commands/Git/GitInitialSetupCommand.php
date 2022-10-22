@@ -3,7 +3,6 @@
 namespace App\Commands\Git;
 
 use App\Traits\InteractsWithProcess;
-use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
 class GitInitialSetupCommand extends Command

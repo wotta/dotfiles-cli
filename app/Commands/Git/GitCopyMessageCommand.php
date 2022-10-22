@@ -4,8 +4,6 @@ namespace App\Commands\Git;
 
 use Illuminate\Support\Str;
 use App\Traits\InteractsWithProcess;
-use Illuminate\Console\Scheduling\Schedule;
-use JetBrains\PhpStorm\NoReturn;
 use LaravelZero\Framework\Commands\Command;
 
 class GitCopyMessageCommand extends Command
